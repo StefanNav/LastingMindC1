@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --parchment: #FBF7F0;
+  --parchment-dark: #F0E8D8;
+  --bark: #3A2A1C;
+  --bark-light: #6B5744;
+  --bark-muted: #8B7A6A;
+  --sage: #7A9E6B;
+  --sage-dark: #3A6B2A;
+  --sage-light: #B5D1A5;
+  --sage-pale: #E3EDDB;
+  --amber: #C8963E;
+  --amber-light: #E8C87A;
+  --amber-glow: #F5E4B8;
+  --rose: #C17B5F;
+  --rose-light: #E8B5A0;
+  --moss: #5A7A4A;
+  --trunk: #6B4A2B;
+  --trunk-light: #8B6A4B;
+  --sky: #E8EFF5;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-parchment: var(--parchment);
+  --color-parchment-dark: var(--parchment-dark);
+  --color-bark: var(--bark);
+  --color-bark-light: var(--bark-light);
+  --color-bark-muted: var(--bark-muted);
+  --color-sage: var(--sage);
+  --color-sage-dark: var(--sage-dark);
+  --color-sage-light: var(--sage-light);
+  --color-sage-pale: var(--sage-pale);
+  --color-amber: var(--amber);
+  --color-amber-light: var(--amber-light);
+  --color-amber-glow: var(--amber-glow);
+  --color-rose: var(--rose);
+  --color-rose-light: var(--rose-light);
+  --color-moss: var(--moss);
+  --color-trunk: var(--trunk);
+  --color-trunk-light: var(--trunk-light);
+  --font-display: var(--font-dm-serif);
+  --font-body: var(--font-nunito);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--parchment);
+  color: var(--bark);
+  font-family: var(--font-nunito), Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(181, 209, 165, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(200, 150, 62, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(193, 123, 95, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+::selection {
+  background: var(--sage-light);
+  color: var(--bark);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bark-muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bark-light);
+}
+
+@keyframes gentle-sway {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+@keyframes leaf-drift {
+  0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+  25% { transform: translateX(2px) translateY(-1px) rotate(1deg); }
+  75% { transform: translateX(-2px) translateY(1px) rotate(-1deg); }
 }

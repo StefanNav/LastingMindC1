@@ -1,0 +1,22 @@
+{
+  "name": "Lasting Mind",
+  "short_name": "LastingMind",
+  "description": "Record your life stories and watch your legacy grow",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF7F0",
+  "theme_color": "#3A6B2A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
