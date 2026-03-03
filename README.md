@@ -1,3 +1,9 @@
+## Lasting Mind
+
+Live site: [https://lastingmindc1.vercel.app](https://lastingmindc1.vercel.app)
+
+GitHub repository: [https://github.com/StefanNav/LastingMindC1](https://github.com/StefanNav/LastingMindC1)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
