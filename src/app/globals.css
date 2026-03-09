@@ -19,6 +19,7 @@
   --trunk: #6B4A2B;
   --trunk-light: #8B6A4B;
   --sky: #E8EFF5;
+  --warm-white: #FFFDF8;
 }
 
 @theme inline {
@@ -39,6 +40,8 @@
   --color-moss: var(--moss);
   --color-trunk: var(--trunk);
   --color-trunk-light: var(--trunk-light);
+  --color-warm-white: var(--warm-white);
+  --color-sky: var(--sky);
   --font-display: var(--font-dm-serif);
   --font-body: var(--font-nunito);
 }

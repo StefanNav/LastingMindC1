@@ -1,0 +1,216 @@
+import type { DemoFlowId } from "@/contexts/DemoModeContext";
+import type { NodeStateData } from "@/lib/mockData";
+
+export interface DemoFlow {
+  id: DemoFlowId;
+  name: string;
+  description: string;
+  phase: string;
+  stateInfo: string;
+  group: 'onboarding' | 'phase1' | 'phase2' | 'phase3';
+}
+
+export const demoFlows: DemoFlow[] = [
+  // Onboarding
+  {
+    id: '00-onboarding',
+    name: 'Onboarding',
+    description: 'Fresh user, first-time experience',
+    phase: 'None',
+    stateInfo: 'No progress',
+    group: 'onboarding',
+  },
+  
+  // Phase 1
+  {
+    id: '01a-phase1-25',
+    name: 'Phase 1, 25% Complete',
+    description: 'Early Phase 1 progress with 1-2 nodes complete',
+    phase: 'Phase 1',
+    stateInfo: 'Family & Friends complete',
+    group: 'phase1',
+  },
+  {
+    id: '01b-phase1-50',
+    name: 'Phase 1, 50% Complete',
+    description: 'Mid Phase 1 progress with 3 nodes complete',
+    phase: 'Phase 1',
+    stateInfo: 'Family, Friends, Favorites complete',
+    group: 'phase1',
+  },
+  {
+    id: '01c-phase1-75',
+    name: 'Phase 1, 75% Complete',
+    description: 'Late Phase 1 progress with 4-5 nodes complete',
+    phase: 'Phase 1',
+    stateInfo: 'Family, Friends, Favorites, Career, Education complete',
+    group: 'phase1',
+  },
+  
+  // Phase 2
+  {
+    id: '02a-phase2-setup',
+    name: 'Phase 2 Setup',
+    description: 'Phase 1 complete, Phase 2 just unlocked',
+    phase: 'Phase 2',
+    stateInfo: 'Phase 1 complete, Phase 2 unlocked',
+    group: 'phase2',
+  },
+  {
+    id: '02b-phase2-25',
+    name: 'Phase 2, 25% Complete',
+    description: 'Early Phase 2 progress',
+    phase: 'Phase 2',
+    stateInfo: 'Chapters complete',
+    group: 'phase2',
+  },
+  {
+    id: '02c-phase2-75',
+    name: 'Phase 2, 75% Complete',
+    description: 'Late Phase 2 progress',
+    phase: 'Phase 2',
+    stateInfo: 'Chapters, Wisdom complete',
+    group: 'phase2',
+  },
+  
+  // Phase 3
+  {
+    id: '03-phase3-setup',
+    name: 'Phase 3 Setup',
+    description: 'Phase 1 & 2 complete, ready for Phase 3',
+    phase: 'Phase 3',
+    stateInfo: 'Phase 1 & 2 complete',
+    group: 'phase3',
+  },
+];
+
+// Mock node states for each demo flow
+export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
+  '00-onboarding': [
+    { nodeId: 'family', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'friends', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'favorites', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'career', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'education', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'values', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdom', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memories', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+  
+  '01a-phase1-25': [
+    { nodeId: 'family', state: 'complete', storyCount: 4, completedModules: ['1.family.capture', '1.family.story'] },
+    { nodeId: 'friends', state: 'active', storyCount: 1, completedModules: ['1.friends.capture'] },
+    { nodeId: 'favorites', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'career', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'education', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'values', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdom', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memories', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+  
+  '01b-phase1-50': [
+    { nodeId: 'family', state: 'complete', storyCount: 4, completedModules: ['1.family.capture', '1.family.story'] },
+    { nodeId: 'friends', state: 'complete', storyCount: 3, completedModules: ['1.friends.capture', '1.friends.story'] },
+    { nodeId: 'favorites', state: 'complete', storyCount: 10, completedModules: ['1.favorites.spin'] },
+    { nodeId: 'career', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'education', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'values', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdom', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memories', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+  
+  '01c-phase1-75': [
+    { nodeId: 'family', state: 'complete', storyCount: 4, completedModules: ['1.family.capture', '1.family.story'] },
+    { nodeId: 'friends', state: 'complete', storyCount: 3, completedModules: ['1.friends.capture', '1.friends.story'] },
+    { nodeId: 'favorites', state: 'complete', storyCount: 10, completedModules: ['1.favorites.spin'] },
+    { nodeId: 'career', state: 'complete', storyCount: 5, completedModules: ['1.career.capture', '1.career.story'] },
+    { nodeId: 'education', state: 'active', storyCount: 2, completedModules: ['1.education.capture'] },
+    { nodeId: 'values', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdom', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memories', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+  
+  '02a-phase2-setup': [
+    { nodeId: 'family', state: 'complete', storyCount: 4, completedModules: ['1.family.capture', '1.family.story'] },
+    { nodeId: 'friends', state: 'complete', storyCount: 3, completedModules: ['1.friends.capture', '1.friends.story'] },
+    { nodeId: 'favorites', state: 'complete', storyCount: 10, completedModules: ['1.favorites.spin'] },
+    { nodeId: 'career', state: 'complete', storyCount: 5, completedModules: ['1.career.capture', '1.career.story'] },
+    { nodeId: 'education', state: 'complete', storyCount: 4, completedModules: ['1.education.capture', '1.education.story'] },
+    { nodeId: 'values', state: 'complete', storyCount: 6, completedModules: ['1.values.roulette'] },
+    { nodeId: 'chapters', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdom', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memories', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+  
+  '02b-phase2-25': [
+    { nodeId: 'family', state: 'complete', storyCount: 4, completedModules: ['1.family.capture', '1.family.story'] },
+    { nodeId: 'friends', state: 'complete', storyCount: 3, completedModules: ['1.friends.capture', '1.friends.story'] },
+    { nodeId: 'favorites', state: 'complete', storyCount: 10, completedModules: ['1.favorites.spin'] },
+    { nodeId: 'career', state: 'complete', storyCount: 5, completedModules: ['1.career.capture', '1.career.story'] },
+    { nodeId: 'education', state: 'complete', storyCount: 4, completedModules: ['1.education.capture', '1.education.story'] },
+    { nodeId: 'values', state: 'complete', storyCount: 6, completedModules: ['1.values.roulette'] },
+    { nodeId: 'chapters', state: 'complete', storyCount: 8, completedModules: ['2.chapters.define', '2.chapters.overview', '2.chapters.deeper'] },
+    { nodeId: 'wisdom', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'memories', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+  
+  '02c-phase2-75': [
+    { nodeId: 'family', state: 'complete', storyCount: 4, completedModules: ['1.family.capture', '1.family.story'] },
+    { nodeId: 'friends', state: 'complete', storyCount: 3, completedModules: ['1.friends.capture', '1.friends.story'] },
+    { nodeId: 'favorites', state: 'complete', storyCount: 10, completedModules: ['1.favorites.spin'] },
+    { nodeId: 'career', state: 'complete', storyCount: 5, completedModules: ['1.career.capture', '1.career.story'] },
+    { nodeId: 'education', state: 'complete', storyCount: 4, completedModules: ['1.education.capture', '1.education.story'] },
+    { nodeId: 'values', state: 'complete', storyCount: 6, completedModules: ['1.values.roulette'] },
+    { nodeId: 'chapters', state: 'complete', storyCount: 8, completedModules: ['2.chapters.define', '2.chapters.overview', '2.chapters.deeper'] },
+    { nodeId: 'wisdom', state: 'complete', storyCount: 12, completedModules: ['2.wisdom.quick', '2.wisdom.lessons', '2.wisdom.keys'] },
+    { nodeId: 'memories', state: 'active', storyCount: 3, completedModules: ['2.memories.define'] },
+    { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+  
+  '03-phase3-setup': [
+    { nodeId: 'family', state: 'complete', storyCount: 4, completedModules: ['1.family.capture', '1.family.story'] },
+    { nodeId: 'friends', state: 'complete', storyCount: 3, completedModules: ['1.friends.capture', '1.friends.story'] },
+    { nodeId: 'favorites', state: 'complete', storyCount: 10, completedModules: ['1.favorites.spin'] },
+    { nodeId: 'career', state: 'complete', storyCount: 5, completedModules: ['1.career.capture', '1.career.story'] },
+    { nodeId: 'education', state: 'complete', storyCount: 4, completedModules: ['1.education.capture', '1.education.story'] },
+    { nodeId: 'values', state: 'complete', storyCount: 6, completedModules: ['1.values.roulette'] },
+    { nodeId: 'chapters', state: 'complete', storyCount: 8, completedModules: ['2.chapters.define', '2.chapters.overview', '2.chapters.deeper'] },
+    { nodeId: 'wisdom', state: 'complete', storyCount: 12, completedModules: ['2.wisdom.quick', '2.wisdom.lessons', '2.wisdom.keys'] },
+    { nodeId: 'memories', state: 'complete', storyCount: 10, completedModules: ['2.memories.define', '2.memories.tell'] },
+    { nodeId: 'letters', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+  ],
+};
+
+export function getFlowById(id: DemoFlowId): DemoFlow | undefined {
+  return demoFlows.find((f) => f.id === id);
+}
+
+export function getNodeStatesForFlow(flowId: DemoFlowId): NodeStateData[] {
+  return demoFlowNodeStates[flowId] || [];
+}

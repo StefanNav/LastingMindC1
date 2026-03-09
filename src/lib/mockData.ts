@@ -30,6 +30,21 @@ export interface UserProgress {
   growthPercentage: number;
 }
 
+// Per-module stats for display (e.g. "5 family members", "3 entries")
+export interface ModuleStat {
+  label: string;
+  value: number;
+}
+
+// Node state data for TapRoot
+export interface NodeStateData {
+  nodeId: string;
+  state: 'locked' | 'suggested' | 'active' | 'complete';
+  storyCount: number;
+  completedModules: string[];
+  moduleStats?: Record<string, ModuleStat>;
+}
+
 export const prompts: Prompt[] = [
   {
     id: "p1",
@@ -273,3 +288,86 @@ export const userProgress: UserProgress = {
   streakDays: 12,
   growthPercentage: 65,
 };
+
+// Node states for TapRoot - demo data showing progress through Phase 1
+export const nodeStates: NodeStateData[] = [
+  // Phase 1 - Foundation
+  {
+    nodeId: 'family',
+    state: 'complete',
+    storyCount: 4,
+    completedModules: ['1.family.capture', '1.family.story'],
+    moduleStats: {
+      '1.family.capture': { label: 'family members', value: 5 },
+      '1.family.story': { label: 'entries', value: 3 },
+    },
+  },
+  {
+    nodeId: 'friends',
+    state: 'complete',
+    storyCount: 3,
+    completedModules: ['1.friends.capture', '1.friends.story'],
+  },
+  {
+    nodeId: 'favorites',
+    state: 'complete',
+    storyCount: 10,
+    completedModules: ['1.favorites.spin'],
+  },
+  {
+    nodeId: 'career',
+    state: 'active',
+    storyCount: 1,
+    completedModules: ['1.career.capture'],
+  },
+  {
+    nodeId: 'education',
+    state: 'suggested',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'values',
+    state: 'suggested',
+    storyCount: 0,
+    completedModules: [],
+  },
+  // Phase 2 - Life Story (all locked for now)
+  {
+    nodeId: 'chapters',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'wisdom',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'memories',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  // Phase 3 - Personal (all locked)
+  {
+    nodeId: 'letters',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'voiceMessages',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'memoir',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+];

@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Serif_Display, Nunito } from "next/font/google";
 import "./globals.css";
+import { ProgressProvider } from "@/contexts/ProgressContext";
+import { DemoModeProvider } from "@/contexts/DemoModeContext";
+import DemoModePill from "@/components/demo/DemoModePill";
+import DemoFlowSelector from "@/components/demo/DemoFlowSelector";
 
 const dmSerif = DM_Serif_Display({
   weight: "400",
@@ -46,7 +50,13 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className={`${dmSerif.variable} ${nunito.variable}`}>
-        {children}
+        <DemoModeProvider>
+          <ProgressProvider>
+            {children}
+            <DemoModePill />
+            <DemoFlowSelector />
+          </ProgressProvider>
+        </DemoModeProvider>
       </body>
     </html>
   );
