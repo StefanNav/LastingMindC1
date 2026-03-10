@@ -12,8 +12,8 @@ export const phases: Phase[] = [
   {
     id: 2,
     name: 'Life Story',
-    description: 'Tell your life chapters, wisdom, and greatest memories',
-    nodes: ['chapters', 'wisdom', 'memories'],
+    description: 'Tell your life chapters and wisdom',
+    nodes: ['chapters', 'wisdom'],
     unlockCondition: 1,
   },
   {
@@ -24,10 +24,10 @@ export const phases: Phase[] = [
     unlockCondition: 2,
   },
   {
-    id: 'ongoing',
+    id: 4,
     name: 'Keep Growing',
-    description: 'Family questions, AI prompts, journal, seasonal content',
-    nodes: ['ongoing'],
+    description: 'Dive deeper, capture the present, connect with family, play again',
+    nodes: ['diveDeeper', 'lifeUpdates', 'familyCorner', 'moreRounds'],
     unlockCondition: 3,
   },
 ];
@@ -92,23 +92,15 @@ export const nodes: Record<NodeId, Node> = {
   },
   wisdom: {
     id: 'wisdom',
-    name: 'Wisdom',
+    name: 'Wisdom & Advice',
     phase: 2,
     icon: 'Lightbulb',
     color: 'var(--color-node-wisdom)',
     modules: ['2.wisdom.quick', '2.wisdom.lessons', '2.wisdom.keys'],
   },
-  memories: {
-    id: 'memories',
-    name: 'Greatest Memories',
-    phase: 2,
-    icon: 'Camera',
-    color: 'var(--color-node-memories)',
-    modules: ['2.memories.define', '2.memories.tell'],
-  },
   letters: {
     id: 'letters',
-    name: 'Letters',
+    name: 'Letters to Loved Ones',
     phase: 3,
     icon: 'Mail',
     color: 'var(--color-node-letters)',
@@ -124,19 +116,43 @@ export const nodes: Record<NodeId, Node> = {
   },
   memoir: {
     id: 'memoir',
-    name: 'Memoir',
+    name: 'How I Hope to be Remembered',
     phase: 3,
     icon: 'FileText',
     color: 'var(--color-node-memoir)',
     modules: ['3.memoir.conversation', '3.memoir.edit'],
   },
-  ongoing: {
-    id: 'ongoing',
-    name: 'Keep Growing',
-    phase: 'ongoing',
-    icon: 'Sprout',
+  diveDeeper: {
+    id: 'diveDeeper',
+    name: 'Dive Deeper',
+    phase: 4,
+    icon: 'SearchCheck',
     color: 'var(--color-sage)',
-    modules: ['ongoing.journal', 'ongoing.questions', 'ongoing.prompts'],
+    modules: ['4.diveDeeper.aiPrompts', '4.diveDeeper.revisit'],
+  },
+  lifeUpdates: {
+    id: 'lifeUpdates',
+    name: 'Life Updates',
+    phase: 4,
+    icon: 'CalendarHeart',
+    color: 'var(--color-sage)',
+    modules: ['4.lifeUpdates.monthlyCheckIn', '4.lifeUpdates.seasonal', '4.lifeUpdates.freeform'],
+  },
+  familyCorner: {
+    id: 'familyCorner',
+    name: 'Family Corner',
+    phase: 4,
+    icon: 'MessageCircleHeart',
+    color: 'var(--color-sage)',
+    modules: ['4.familyCorner.answerQuestions', '4.familyCorner.sendPrompt', '4.familyCorner.liveConversation'],
+  },
+  moreRounds: {
+    id: 'moreRounds',
+    name: 'More Rounds',
+    phase: 4,
+    icon: 'RefreshCw',
+    color: 'var(--color-sage)',
+    modules: ['4.moreRounds.newFavorites', '4.moreRounds.newWisdom', '4.moreRounds.newLetters'],
   },
 
   // Demo chapter nodes (defaults for Your Life Story section)
@@ -354,24 +370,6 @@ export const modules: Record<string, Module> = {
     isRequired: false,
   },
 
-  // Phase 2: Memories
-  '2.memories.define': {
-    id: '2.memories.define',
-    nodeId: 'memories',
-    name: 'Define Your Moments',
-    description: 'Choose your greatest memories to explore',
-    pattern: 'IP-04',
-    isRequired: true,
-  },
-  '2.memories.tell': {
-    id: '2.memories.tell',
-    nodeId: 'memories',
-    name: 'Tell Each Story',
-    description: 'Share the full story of each moment',
-    pattern: 'IP-02',
-    isRequired: true,
-  },
-
   // Phase 3: Letters
   '3.letters.define': {
     id: '3.letters.define',
@@ -460,29 +458,99 @@ export const modules: Record<string, Module> = {
     isRequired: true,
   },
 
-  // Ongoing
-  'ongoing.journal': {
-    id: 'ongoing.journal',
-    nodeId: 'ongoing',
+  // Phase 4: Keep Growing — Dive Deeper
+  '4.diveDeeper.aiPrompts': {
+    id: '4.diveDeeper.aiPrompts',
+    nodeId: 'diveDeeper',
+    name: 'AI-Suggested Prompts',
+    description: 'AI finds gaps in your story and asks targeted questions',
+    pattern: 'IP-06',
+    isRequired: false,
+  },
+  '4.diveDeeper.revisit': {
+    id: '4.diveDeeper.revisit',
+    nodeId: 'diveDeeper',
+    name: 'Revisit a Topic',
+    description: 'Choose any previous node and get fresh questions',
+    pattern: 'IP-06',
+    isRequired: false,
+  },
+
+  // Phase 4: Keep Growing — Life Updates
+  '4.lifeUpdates.monthlyCheckIn': {
+    id: '4.lifeUpdates.monthlyCheckIn',
+    nodeId: 'lifeUpdates',
+    name: 'Monthly Check-In',
+    description: "What's been on your mind this month?",
+    pattern: 'IP-02',
+    isRequired: false,
+  },
+  '4.lifeUpdates.seasonal': {
+    id: '4.lifeUpdates.seasonal',
+    nodeId: 'lifeUpdates',
+    name: 'Seasonal Prompts',
+    description: 'Holiday traditions, birthday reflections, anniversary prompts',
+    pattern: 'IP-06',
+    isRequired: false,
+  },
+  '4.lifeUpdates.freeform': {
+    id: '4.lifeUpdates.freeform',
+    nodeId: 'lifeUpdates',
     name: 'Freeform Journal',
-    description: 'Write or record anything on your mind',
+    description: 'Just talk. AI files it into the right branch.',
     pattern: 'IP-10',
     isRequired: false,
   },
-  'ongoing.questions': {
-    id: 'ongoing.questions',
-    nodeId: 'ongoing',
-    name: 'Family Questions',
-    description: 'Answer questions from your family',
+
+  // Phase 4: Keep Growing — Family Corner
+  '4.familyCorner.answerQuestions': {
+    id: '4.familyCorner.answerQuestions',
+    nodeId: 'familyCorner',
+    name: 'Answer Family Questions',
+    description: 'Sarah asked: What was it like when I was born?',
     pattern: 'IP-09',
     isRequired: false,
   },
-  'ongoing.prompts': {
-    id: 'ongoing.prompts',
-    nodeId: 'ongoing',
-    name: 'AI Prompts',
-    description: 'Respond to AI-generated prompts',
-    pattern: 'IP-06',
+  '4.familyCorner.sendPrompt': {
+    id: '4.familyCorner.sendPrompt',
+    nodeId: 'familyCorner',
+    name: 'Send a Prompt',
+    description: 'Nudge a family member to send you a question',
+    pattern: 'IP-09',
+    isRequired: false,
+  },
+  '4.familyCorner.liveConversation': {
+    id: '4.familyCorner.liveConversation',
+    nodeId: 'familyCorner',
+    name: 'Live Conversation',
+    description: 'Capture a real-time conversation',
+    pattern: 'IP-05+record',
+    isRequired: false,
+  },
+
+  // Phase 4: Keep Growing — More Rounds
+  '4.moreRounds.newFavorites': {
+    id: '4.moreRounds.newFavorites',
+    nodeId: 'moreRounds',
+    name: 'New Favorites',
+    description: 'Spin the wheel with fresh categories',
+    pattern: 'IP-03',
+    isRequired: false,
+  },
+  '4.moreRounds.newWisdom': {
+    id: '4.moreRounds.newWisdom',
+    nodeId: 'moreRounds',
+    name: 'New Wisdom',
+    description: 'Quick wisdom rounds with new prompts',
+    pattern: 'IP-03',
+    isRequired: false,
+  },
+  '4.moreRounds.newLetters': {
+    id: '4.moreRounds.newLetters',
+    nodeId: 'moreRounds',
+    name: 'New Letters & Messages',
+    description: 'Write more letters or record more voice messages',
+    pattern: 'IP-07',
     isRequired: false,
   },
 };
@@ -528,14 +596,14 @@ export const sections: Section[] = [
   },
   {
     id: 2,
-    title: 'Wisdom & Advice',
-    nodeIds: ['wisdomQuick', 'wisdomLessons', 'wisdomKeys'],
-    lockedMessage: 'Complete Your Foundation to unlock this section. The wisdom you share here will be informed by everything you\'ve told me about your life.',
+    title: 'Your Legacy',
+    nodeIds: ['wisdom', 'letters', 'voiceMessages', 'memoir'],
+    lockedMessage: 'Complete Your Foundation to unlock this section. Your legacy — wisdom, letters, voice messages, and how you hope to be remembered — will be shaped by everything you\'ve shared.',
   },
   {
     id: 3,
-    title: 'Personal to You',
-    nodeIds: ['letters', 'voiceMessages', 'memories', 'memoir'],
-    lockedMessage: 'This section unlocks after your foundation is complete. Here you\'ll write letters, leave voice messages, and reflect on how you want to be remembered.',
+    title: 'Keep Growing',
+    nodeIds: ['diveDeeper', 'lifeUpdates', 'familyCorner', 'moreRounds'],
+    lockedMessage: 'Complete Your Legacy to unlock this section. Keep your story growing with new prompts, life updates, family questions, and more rounds.',
   },
 ];

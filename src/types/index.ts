@@ -2,7 +2,7 @@
 export type NodeState = 'locked' | 'suggested' | 'active' | 'complete';
 
 // Phase identifiers
-export type PhaseId = 1 | 2 | 3 | 'ongoing';
+export type PhaseId = 1 | 2 | 3 | 4;
 
 // Node identifiers matching ARCHITECTURE.md
 export type NodeId = 
@@ -14,11 +14,13 @@ export type NodeId =
   | 'values'
   | 'chapters' 
   | 'wisdom' 
-  | 'memories'
   | 'letters' 
   | 'voiceMessages' 
   | 'memoir'
-  | 'ongoing'
+  | 'diveDeeper'
+  | 'lifeUpdates'
+  | 'familyCorner'
+  | 'moreRounds'
   | 'chapterChildhood'
   | 'chapterSchool'
   | 'chapterCollege'

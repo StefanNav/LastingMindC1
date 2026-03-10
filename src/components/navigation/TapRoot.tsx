@@ -1,15 +1,27 @@
 "use client";
 
 import { motion, useInView, AnimatePresence, type PanInfo } from "framer-motion";
-import { useRef, useState, useMemo, useCallback } from "react";
+import { useRef, useState, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Check, ChevronLeft, ChevronRight, Lock, Play, Plus } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Lock, Play, Plus, Infinity, UserPlus, User } from "lucide-react";
 import NodeBubble from "./NodeBubble";
 import { nodes, getModulesForNode, sections } from "@/data/modules";
+import { familyMockCapturedData } from "@/data/prompts/family";
 import type { NodeId, SectionId } from "@/types";
 import type { NodeStateData, ModuleStat } from "@/lib/mockData";
 
 const PHASE_1_NODE_IDS: NodeId[] = ['family', 'friends', 'favorites', 'career', 'education', 'values'];
+const KEEP_GROWING_NODE_IDS: NodeId[] = ['diveDeeper', 'lifeUpdates', 'familyCorner', 'moreRounds'];
+const KEEP_GROWING_SECTION_ID: SectionId = 3;
+
+const KEEP_GROWING_LABELS: Record<string, { subtitle: string; countLabel: string }> = {
+  diveDeeper: { subtitle: 'Fill in the gaps', countLabel: 'entries' },
+  lifeUpdates: { subtitle: 'Capture the present', countLabel: 'entries' },
+  familyCorner: { subtitle: 'Your family drives your story', countLabel: 'questions answered' },
+  moreRounds: { subtitle: 'Play again', countLabel: 'rounds played' },
+};
+
+const COMING_SOON_MODULES = ['4.familyCorner.liveConversation'];
 const SWIPE_THRESHOLD = 50;
 
 const sectionVariants = {
@@ -48,10 +60,21 @@ export default function TapRoot({ nodeStates, onSectionChange }: TapRootProps) {
     [stateMap],
   );
 
-  // Default section: 0 if phase 1 incomplete, 1 if complete
-  const [[activeSection, direction], setSection] = useState<[SectionId, number]>([
-    0, 0,
-  ]);
+  // Persist active section across navigation (survives router.back())
+  const [[activeSection, direction], setSection] = useState<[SectionId, number]>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('taproot-section');
+      if (stored !== null) {
+        const parsed = Number(stored);
+        if (parsed >= 0 && parsed < sections.length) return [parsed as SectionId, 0];
+      }
+    }
+    return [0, 0];
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('taproot-section', String(activeSection));
+  }, [activeSection]);
 
   const goToSection = useCallback((newSection: SectionId, dir: number) => {
     setExpandedNode(null);
@@ -88,6 +111,7 @@ export default function TapRoot({ nodeStates, onSectionChange }: TapRootProps) {
 
   const currentSection = sections[activeSection];
   const isSectionLocked = activeSection > 0 && !isPhase1Complete;
+  const isKeepGrowing = activeSection === KEEP_GROWING_SECTION_ID;
 
   return (
     <div className="w-full">
@@ -166,11 +190,25 @@ export default function TapRoot({ nodeStates, onSectionChange }: TapRootProps) {
             <div className="relative pt-4 pb-4">
               {/* Central trunk line */}
               <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-[3px]">
-                <div className={`w-full h-full rounded-full ${
-                  isSectionLocked
-                    ? 'bg-gradient-to-b from-bark-muted/20 via-bark-muted/15 to-bark-muted/10'
-                    : 'bg-gradient-to-b from-sage-dark/50 via-sage/40 to-sage-light/30'
-                }`} />
+                {isKeepGrowing ? (
+                  <>
+                    <div className="w-full h-[70%] rounded-full bg-gradient-to-b from-sage-dark/50 via-sage/40 to-sage-light/20" />
+                    <div
+                      className="w-full h-[30%]"
+                      style={{
+                        backgroundImage: 'linear-gradient(to bottom, var(--sage-light) 50%, transparent 50%)',
+                        backgroundSize: '3px 10px',
+                        opacity: 0.3,
+                      }}
+                    />
+                  </>
+                ) : (
+                  <div className={`w-full h-full rounded-full ${
+                    isSectionLocked
+                      ? 'bg-gradient-to-b from-bark-muted/20 via-bark-muted/15 to-bark-muted/10'
+                      : 'bg-gradient-to-b from-sage-dark/50 via-sage/40 to-sage-light/30'
+                  }`} />
+                )}
               </div>
 
               {/* Locked section message */}
@@ -214,6 +252,7 @@ export default function TapRoot({ nodeStates, onSectionChange }: TapRootProps) {
                         isLeft={isLeft}
                         isExpanded={isExpanded}
                         index={index}
+                        isKeepGrowing={isKeepGrowing && !isSectionLocked}
                         onClick={() => handleNodeClick(nodeId, effectiveState)}
                       />
 
@@ -234,6 +273,23 @@ export default function TapRoot({ nodeStates, onSectionChange }: TapRootProps) {
                   );
                 })}
               </div>
+
+              {/* Keep Growing footer — fading dashed line + message */}
+              {isKeepGrowing && !isSectionLocked && (
+                <motion.div
+                  className="relative z-10 flex flex-col items-center gap-2 pt-8 pb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-sage/40 flex items-center justify-center">
+                    <Plus className="w-4 h-4 text-sage/60" />
+                  </div>
+                  <p className="text-[11px] text-bark-muted/60 font-medium tracking-wide">
+                    Keep growing your tree
+                  </p>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         </AnimatePresence>
@@ -253,10 +309,11 @@ interface NodeRowProps {
   isLeft: boolean;
   isExpanded: boolean;
   index: number;
+  isKeepGrowing?: boolean;
   onClick: () => void;
 }
 
-function NodeRow({ nodeId, name, state, storyCount, totalModules, completedModules, color, isLeft, isExpanded, index, onClick }: NodeRowProps) {
+function NodeRow({ nodeId, name, state, storyCount, totalModules, completedModules, color, isLeft, isExpanded, index, isKeepGrowing = false, onClick }: NodeRowProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-30px" });
 
@@ -286,6 +343,8 @@ function NodeRow({ nodeId, name, state, storyCount, totalModules, completedModul
             color={color}
             isLeft={true}
             isExpanded={isExpanded}
+            isKeepGrowing={isKeepGrowing}
+            keepGrowingCountLabel={KEEP_GROWING_LABELS[nodeId]?.countLabel}
             onClick={onClick}
           />
         </div>
@@ -345,6 +404,8 @@ function NodeRow({ nodeId, name, state, storyCount, totalModules, completedModul
             color={color}
             isLeft={false}
             isExpanded={isExpanded}
+            isKeepGrowing={isKeepGrowing}
+            keepGrowingCountLabel={KEEP_GROWING_LABELS[nodeId]?.countLabel}
             onClick={onClick}
           />
         </div>
@@ -357,7 +418,6 @@ function NodeRow({ nodeId, name, state, storyCount, totalModules, completedModul
 
 // Config for nodes that support "Tell another" storytelling shortcut
 const tellAnotherConfig: Partial<Record<NodeId, { label: string; storyModuleId: string }>> = {
-  family: { label: '+ Tell another family story', storyModuleId: '1.family.story' },
   friends: { label: '+ Tell another friend story', storyModuleId: '1.friends.story' },
   career: { label: '+ Tell another career story', storyModuleId: '1.career.story' },
   education: { label: '+ Tell another school memory', storyModuleId: '1.education.story' },
@@ -376,6 +436,7 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
   const nodeModules = getModulesForNode(nodeId);
   const tellAnother = tellAnotherConfig[nodeId];
   const showTellAnother = tellAnother && completedModules.includes(tellAnother.storyModuleId);
+  const showFamilyAddMore = nodeId === 'family' && completedModules.includes('1.family.story');
 
   // Module cards are placed on the same side as the node, centered under the node card.
   // A vertical line runs from the node center down through the center of each module.
@@ -401,6 +462,7 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
           />
           {nodeModules.map((mod, i) => {
             const isComplete = completedModules.includes(mod.id);
+            const isComingSoon = COMING_SOON_MODULES.includes(mod.id);
             const stat = moduleStats?.[mod.id];
             return (
               <ModuleCard
@@ -408,6 +470,7 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
                 name={mod.name}
                 description={mod.description}
                 isComplete={isComplete}
+                isComingSoon={isComingSoon}
                 stat={stat}
                 index={i}
                 direction="left"
@@ -415,6 +478,13 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
               />
             );
           })}
+          {showFamilyAddMore && (
+            <FamilyAddMoreSection
+              storyCount={storyCount}
+              index={nodeModules.length}
+              direction="left"
+            />
+          )}
           {showTellAnother && (
             <TellAnotherCard
               label={tellAnother.label}
@@ -446,6 +516,7 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
           />
           {nodeModules.map((mod, i) => {
             const isComplete = completedModules.includes(mod.id);
+            const isComingSoon = COMING_SOON_MODULES.includes(mod.id);
             const stat = moduleStats?.[mod.id];
             return (
               <ModuleCard
@@ -453,6 +524,7 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
                 name={mod.name}
                 description={mod.description}
                 isComplete={isComplete}
+                isComingSoon={isComingSoon}
                 stat={stat}
                 index={i}
                 direction="right"
@@ -460,6 +532,13 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
               />
             );
           })}
+          {showFamilyAddMore && (
+            <FamilyAddMoreSection
+              storyCount={storyCount}
+              index={nodeModules.length}
+              direction="right"
+            />
+          )}
           {showTellAnother && (
             <TellAnotherCard
               label={tellAnother.label}
@@ -477,10 +556,149 @@ function ModuleBranch({ nodeId, isLeft, completedModules, storyCount, moduleStat
   );
 }
 
+// ── Family "Add More" section ──
+// Replaces TellAnotherCard for family node with 4 rich option cards.
+
+interface FamilyAddMoreProps {
+  storyCount: number;
+  index: number;
+  direction: 'left' | 'right';
+}
+
+// Mock entry counts per family member for carousel display
+const FAMILY_MEMBER_ENTRIES: Record<string, number> = {
+  Linda: 3,
+  Margaret: 2,
+  Sarah: 1,
+  Michael: 1,
+  Tom: 0,
+  Robert: 0,
+  Helen: 1,
+};
+
+function FamilyAddMoreSection({ storyCount, index, direction }: FamilyAddMoreProps) {
+  const totalEntries = Object.values(FAMILY_MEMBER_ENTRIES).reduce((a, b) => a + b, 0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const scrollCarousel = useCallback((dir: 'left' | 'right') => {
+    if (!carouselRef.current) return;
+    const scrollAmount = 72; // card width + gap
+    carouselRef.current.scrollBy({
+      left: dir === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  }, []);
+
+  return (
+    <motion.div
+      className="relative z-10 w-[148px] flex flex-col gap-1.5"
+      initial={{ opacity: 0, x: direction === 'left' ? -12 : 12 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.08 + 0.1 }}
+    >
+      {/* Section header */}
+      <div className="bg-white border border-bark-muted/10 rounded-lg px-3 py-1.5 mt-2 mb-0.5 text-center">
+        <p className="text-[10px] font-semibold tracking-[0.05em] uppercase text-sage-dark/70">
+          Family Members
+        </p>
+      </div>
+
+      {/* Family member carousel */}
+      <div
+        ref={carouselRef}
+        className="flex gap-1.5 overflow-x-auto pb-1 -mx-0.5 px-0.5 snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+      >
+        {familyMockCapturedData.map((member) => {
+          const entries = FAMILY_MEMBER_ENTRIES[String(member.name)] ?? 0;
+          const hasEntries = entries > 0;
+          return (
+            <motion.button
+              key={String(member.name)}
+              className={`
+                flex flex-col items-center gap-1 p-2 rounded-lg snap-start flex-shrink-0 w-[68px]
+                transition-all cursor-pointer
+                ${hasEntries
+                  ? 'bg-white border border-bark-muted/10 hover:bg-sage-light/20'
+                  : 'bg-white/60 border border-dashed border-bark-muted/20 hover:bg-white'}
+              `}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <div className={`
+                w-7 h-7 rounded-full flex items-center justify-center
+                ${hasEntries ? 'bg-sage-light/50' : 'bg-bark-muted/8'}
+              `}>
+                <User className={`w-3.5 h-3.5 ${hasEntries ? 'text-sage-dark' : 'text-bark-muted/40'}`} />
+              </div>
+              <p className={`text-[11px] font-semibold leading-none ${hasEntries ? 'text-bark' : 'text-bark/70'}`}>
+                {String(member.name)}
+              </p>
+              <p className={`text-[9px] leading-none ${hasEntries ? 'text-bark-muted/70' : 'text-bark-muted/60'}`}>
+                {String(member.relationship)}
+              </p>
+              <span className={`text-[9px] leading-none font-semibold px-1.5 py-0.5 rounded-full ${hasEntries ? 'bg-[#d5e0d0] text-sage-dark' : 'bg-[#e8e4df] text-bark-muted'}`}>
+                {entries} {entries === 1 ? 'entry' : 'entries'}
+              </span>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      {/* Carousel nav buttons */}
+      <div className="flex items-center justify-center gap-3">
+        <button
+          onClick={() => scrollCarousel('left')}
+          className="w-5 h-5 rounded-full flex items-center justify-center bg-white border border-bark-muted/15 hover:bg-sage-light/30 transition-colors"
+        >
+          <ChevronLeft className="w-3 h-3 text-bark-muted/50" />
+        </button>
+        <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full bg-[#d5e0d0] text-sage-dark">
+          {familyMockCapturedData.length} members
+        </span>
+        <button
+          onClick={() => scrollCarousel('right')}
+          className="w-5 h-5 rounded-full flex items-center justify-center bg-white border border-bark-muted/15 hover:bg-sage-light/30 transition-colors"
+        >
+          <ChevronRight className="w-3 h-3 text-bark-muted/50" />
+        </button>
+      </div>
+
+      {/* Add Family Member card — at bottom */}
+      <motion.button
+        className="
+          flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-left w-full
+          bg-white border border-bark-muted/10
+          hover:bg-sage-light/30 transition-all cursor-pointer
+        "
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 bg-sage-light/40">
+          <UserPlus className="w-3.5 h-3.5 text-sage-dark" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-[11px] font-semibold leading-snug text-bark">Add Family Member</p>
+          <p className="text-[9px] leading-snug text-bark-muted/60 mt-0.5">Someone you forgot?</p>
+        </div>
+        <ChevronRight className="w-3 h-3 text-bark-muted/25 flex-shrink-0" />
+      </motion.button>
+
+      {/* Counter */}
+      <div className="text-center">
+        <span className="text-[9px] font-semibold px-2 py-0.5 rounded-full bg-[#d5e0d0] text-sage-dark">
+          {totalEntries} entries total
+        </span>
+      </div>
+    </motion.div>
+  );
+}
+
 interface ModuleCardProps {
   name: string;
   description: string;
   isComplete: boolean;
+  isComingSoon?: boolean;
   stat?: ModuleStat;
   index: number;
   direction: 'left' | 'right';
@@ -530,14 +748,16 @@ function TellAnotherCard({ label, storyCount, index, direction, onClick }: TellA
   );
 }
 
-function ModuleCard({ name, description, isComplete, stat, index, direction, onClick }: ModuleCardProps) {
+function ModuleCard({ name, description, isComplete, isComingSoon = false, stat, index, direction, onClick }: ModuleCardProps) {
   return (
     <motion.button
-      onClick={onClick}
+      onClick={isComingSoon ? undefined : onClick}
       className={`
         relative z-10 flex flex-col gap-1.5 p-3 rounded-xl text-left w-[148px]
         transition-all shadow-sm
-        ${isComplete
+        ${isComingSoon
+          ? 'bg-parchment-dark/30 border border-dashed border-bark-muted/20 opacity-60 cursor-default'
+          : isComplete
           ? 'bg-white border border-sage/30'
           : 'bg-white border border-bark-muted/15 hover:border-sage/40 hover:shadow-md'
         }
@@ -550,18 +770,24 @@ function ModuleCard({ name, description, isComplete, stat, index, direction, onC
       <div className="flex items-center justify-between w-full">
         <div className={`
           w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0
-          ${isComplete ? 'bg-sage-dark' : 'bg-bark-muted/10'}
+          ${isComingSoon ? 'bg-bark-muted/15' : isComplete ? 'bg-sage-dark' : 'bg-bark-muted/10'}
         `}>
-          {isComplete 
+          {isComingSoon
+            ? <Lock className="w-2.5 h-2.5 text-bark-muted/40" />
+            : isComplete 
             ? <Check className="w-3 h-3 text-white" strokeWidth={3} />
             : <Play className="w-2.5 h-2.5 text-bark-muted/50 ml-0.5" />
           }
         </div>
-        <ChevronRight className="w-3.5 h-3.5 text-bark-muted/30" />
+        {isComingSoon ? (
+          <span className="text-[9px] font-bold tracking-wide uppercase text-bark-muted/40">Coming Soon</span>
+        ) : (
+          <ChevronRight className="w-3.5 h-3.5 text-bark-muted/30" />
+        )}
       </div>
 
       {/* Title */}
-      <p className={`text-[13px] font-semibold leading-snug ${isComplete ? 'text-sage-dark' : 'text-bark'}`}>
+      <p className={`text-[13px] font-semibold leading-snug ${isComingSoon ? 'text-bark-muted/50' : isComplete ? 'text-sage-dark' : 'text-bark'}`}>
         {name}
       </p>
 

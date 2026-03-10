@@ -10,11 +10,13 @@ import {
   Compass,
   BookOpen,
   Lightbulb,
-  Camera,
   Mail,
   MessageCircle,
   FileText,
-  Sprout,
+  SearchCheck,
+  CalendarHeart,
+  MessageCircleHeart,
+  RefreshCw,
   Lock,
   Check,
   ChevronDown,
@@ -40,6 +42,8 @@ interface NodeBubbleProps {
   color: string;
   isLeft: boolean;
   isExpanded?: boolean;
+  isKeepGrowing?: boolean;
+  keepGrowingCountLabel?: string;
   onClick?: () => void;
 }
 
@@ -52,11 +56,13 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Compass,
   BookOpen,
   Lightbulb,
-  Camera,
   Mail,
   MessageCircle,
   FileText,
-  Sprout,
+  SearchCheck,
+  CalendarHeart,
+  MessageCircleHeart,
+  RefreshCw,
   Baby,
   School,
   Rocket,
@@ -74,11 +80,13 @@ const nodeIconMap: Record<NodeId, string> = {
   values: 'Compass',
   chapters: 'BookOpen',
   wisdom: 'Lightbulb',
-  memories: 'Camera',
   letters: 'Mail',
   voiceMessages: 'MessageCircle',
   memoir: 'FileText',
-  ongoing: 'Sprout',
+  diveDeeper: 'SearchCheck',
+  lifeUpdates: 'CalendarHeart',
+  familyCorner: 'MessageCircleHeart',
+  moreRounds: 'RefreshCw',
   chapterChildhood: 'Baby',
   chapterSchool: 'School',
   chapterCollege: 'GraduationCap',
@@ -99,6 +107,8 @@ export default function NodeBubble({
   color,
   isLeft,
   isExpanded = false,
+  isKeepGrowing = false,
+  keepGrowingCountLabel = 'entries',
   onClick,
 }: NodeBubbleProps) {
   const iconName = nodeIconMap[nodeId];
@@ -113,14 +123,14 @@ export default function NodeBubble({
   // State-based styles
   const stateStyles = {
     locked: {
-      bg: 'bg-parchment-dark/40',
+      bg: 'bg-white',
       text: 'text-bark-muted/50',
       iconBg: 'bg-bark-muted/8',
       iconColor: 'text-bark-muted/40',
       statusColor: 'text-bark-muted/40',
     },
     suggested: {
-      bg: 'bg-sage-light/30',
+      bg: 'bg-white',
       text: 'text-sage-dark',
       iconBg: 'bg-sage/20',
       iconColor: 'text-sage-dark',
@@ -163,7 +173,9 @@ export default function NodeBubble({
   const segmentSize = availablePerimeter / segmentCount;
 
   // Status label
-  const statusLabel = state === 'complete'
+  const statusLabel = isKeepGrowing
+    ? `${storyCount} ${keepGrowingCountLabel}`
+    : state === 'complete'
     ? `${completedCount}/${segmentCount} complete`
     : state === 'active'
     ? `${completedCount}/${segmentCount} in progress`
@@ -222,9 +234,9 @@ export default function NodeBubble({
       )}
 
       {/* Top row: icon + name */}
-      <div className="flex items-center gap-2.5 w-full">
+      <div className="flex items-start gap-2 w-full">
         <div className={`
-          w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0
+          w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0
           ${styles.iconBg}
         `}>
           {state === 'locked' ? (

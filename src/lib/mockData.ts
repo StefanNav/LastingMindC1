@@ -316,21 +316,21 @@ export const nodeStates: NodeStateData[] = [
   },
   {
     nodeId: 'career',
-    state: 'active',
-    storyCount: 1,
-    completedModules: ['1.career.capture'],
+    state: 'complete',
+    storyCount: 2,
+    completedModules: ['1.career.capture', '1.career.story'],
   },
   {
     nodeId: 'education',
-    state: 'suggested',
-    storyCount: 0,
-    completedModules: [],
+    state: 'complete',
+    storyCount: 1,
+    completedModules: ['1.education.capture', '1.education.story'],
   },
   {
     nodeId: 'values',
-    state: 'suggested',
-    storyCount: 0,
-    completedModules: [],
+    state: 'complete',
+    storyCount: 5,
+    completedModules: ['1.values.roulette'],
   },
   // Phase 2 - Life Story (all locked for now)
   {
@@ -341,32 +341,26 @@ export const nodeStates: NodeStateData[] = [
   },
   {
     nodeId: 'wisdom',
-    state: 'locked',
-    storyCount: 0,
-    completedModules: [],
-  },
-  {
-    nodeId: 'memories',
-    state: 'locked',
+    state: 'suggested',
     storyCount: 0,
     completedModules: [],
   },
   // Phase 3 - Personal (all locked)
   {
     nodeId: 'letters',
-    state: 'locked',
+    state: 'suggested',
     storyCount: 0,
     completedModules: [],
   },
   {
     nodeId: 'voiceMessages',
-    state: 'locked',
+    state: 'suggested',
     storyCount: 0,
     completedModules: [],
   },
   {
     nodeId: 'memoir',
-    state: 'locked',
+    state: 'suggested',
     storyCount: 0,
     completedModules: [],
   },
@@ -399,6 +393,31 @@ export const nodeStates: NodeStateData[] = [
     nodeId: 'chapterLaterLife',
     state: 'locked',
     storyCount: 0,
+    completedModules: [],
+  },
+  // Phase 4 - Keep Growing (always active, never complete)
+  {
+    nodeId: 'diveDeeper',
+    state: 'active',
+    storyCount: 12,
+    completedModules: [],
+  },
+  {
+    nodeId: 'lifeUpdates',
+    state: 'active',
+    storyCount: 5,
+    completedModules: [],
+  },
+  {
+    nodeId: 'familyCorner',
+    state: 'active',
+    storyCount: 3,
+    completedModules: [],
+  },
+  {
+    nodeId: 'moreRounds',
+    state: 'active',
+    storyCount: 2,
     completedModules: [],
   },
   // Promoted wisdom nodes (locked until Phase 1 complete)

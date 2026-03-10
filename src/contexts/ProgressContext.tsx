@@ -98,12 +98,18 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         newCompletedModules.includes(m)
       );
 
+      // Phase 4 (Keep Growing) nodes never transition to 'complete'
+      const isKeepGrowingNode = node.phase === 4;
+      const newState = isKeepGrowingNode
+        ? 'active'
+        : allModulesComplete ? 'complete' : 'active';
+
       const newNodeStates = {
         ...prev.nodeStates,
         [nodeId]: {
           ...nodeState,
           completedModules: [...nodeState.completedModules, moduleId],
-          state: allModulesComplete ? 'complete' : 'active',
+          state: newState,
         },
       };
 

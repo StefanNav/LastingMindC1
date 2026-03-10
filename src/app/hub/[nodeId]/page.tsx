@@ -14,12 +14,15 @@ import {
   Compass,
   BookOpen,
   Lightbulb,
-  Camera,
   Mail,
   MessageCircle,
   FileText,
   Mic,
   Check,
+  SearchCheck,
+  CalendarHeart,
+  MessageCircleHeart,
+  RefreshCw,
 } from "lucide-react";
 import { nodes, getModulesForNode } from "@/data/modules";
 import { useProgress } from "@/contexts/ProgressContext";
@@ -43,10 +46,13 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Compass,
   BookOpen,
   Lightbulb,
-  Camera,
   Mail,
   MessageCircle,
   FileText,
+  SearchCheck,
+  CalendarHeart,
+  MessageCircleHeart,
+  RefreshCw,
 };
 
 // Pre-built mock story cards per node for demo display

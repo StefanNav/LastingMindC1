@@ -65,7 +65,7 @@ export default function QuickNav({ currentPhase, onPhaseSelect }: QuickNavProps)
                 >
                   <div>
                     <p className={`text-sm font-medium ${isActive ? 'text-sage-dark' : 'text-bark'}`}>
-                      {typeof phase.id === 'number' ? `Phase ${phase.id}` : 'Ongoing'}
+                      Phase {phase.id}
                     </p>
                     <p className="text-xs text-bark-muted">{phase.name}</p>
                   </div>
