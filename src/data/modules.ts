@@ -1,4 +1,4 @@
-import type { Phase, Node, Module, PhaseId, NodeId } from '@/types';
+import type { Phase, Node, Module, PhaseId, NodeId, Section } from '@/types';
 
 // Phase definitions
 export const phases: Phase[] = [
@@ -137,6 +137,74 @@ export const nodes: Record<NodeId, Node> = {
     icon: 'Sprout',
     color: 'var(--color-sage)',
     modules: ['ongoing.journal', 'ongoing.questions', 'ongoing.prompts'],
+  },
+
+  // Demo chapter nodes (defaults for Your Life Story section)
+  chapterChildhood: {
+    id: 'chapterChildhood',
+    name: 'Childhood',
+    phase: 2,
+    icon: 'Baby',
+    color: 'var(--color-amber-light)',
+    modules: ['2.chapter.childhood'],
+  },
+  chapterSchool: {
+    id: 'chapterSchool',
+    name: 'Middle & High School',
+    phase: 2,
+    icon: 'School',
+    color: 'var(--color-amber-light)',
+    modules: ['2.chapter.school'],
+  },
+  chapterCollege: {
+    id: 'chapterCollege',
+    name: 'College Years',
+    phase: 2,
+    icon: 'GraduationCap',
+    color: 'var(--color-amber-light)',
+    modules: ['2.chapter.college'],
+  },
+  chapterEarlyCareer: {
+    id: 'chapterEarlyCareer',
+    name: 'Early Career',
+    phase: 2,
+    icon: 'Rocket',
+    color: 'var(--color-amber-light)',
+    modules: ['2.chapter.earlyCareer'],
+  },
+  chapterLaterLife: {
+    id: 'chapterLaterLife',
+    name: 'Later Life',
+    phase: 2,
+    icon: 'Sunset',
+    color: 'var(--color-amber-light)',
+    modules: ['2.chapter.laterLife'],
+  },
+
+  // Promoted wisdom nodes (each was a sub-module of the old wisdom node)
+  wisdomQuick: {
+    id: 'wisdomQuick',
+    name: 'Quick Wisdom Round',
+    phase: 2,
+    icon: 'Zap',
+    color: 'var(--color-node-wisdom)',
+    modules: ['2.wisdom.quick'],
+  },
+  wisdomLessons: {
+    id: 'wisdomLessons',
+    name: 'Lessons Learned',
+    phase: 2,
+    icon: 'Lightbulb',
+    color: 'var(--color-node-wisdom)',
+    modules: ['2.wisdom.lessons'],
+  },
+  wisdomKeys: {
+    id: 'wisdomKeys',
+    name: 'Keys to Life',
+    phase: 2,
+    icon: 'Key',
+    color: 'var(--color-node-wisdom)',
+    modules: ['2.wisdom.keys'],
   },
 };
 
@@ -350,6 +418,48 @@ export const modules: Record<string, Module> = {
     isRequired: true,
   },
 
+  // Demo chapter modules
+  '2.chapter.childhood': {
+    id: '2.chapter.childhood',
+    nodeId: 'chapterChildhood',
+    name: 'Your Childhood',
+    description: 'Tell the story of your earliest years',
+    pattern: 'IP-02',
+    isRequired: true,
+  },
+  '2.chapter.school': {
+    id: '2.chapter.school',
+    nodeId: 'chapterSchool',
+    name: 'School Days',
+    description: 'Share memories from middle and high school',
+    pattern: 'IP-02',
+    isRequired: true,
+  },
+  '2.chapter.college': {
+    id: '2.chapter.college',
+    nodeId: 'chapterCollege',
+    name: 'College Years',
+    description: 'Revisit your college experience',
+    pattern: 'IP-02',
+    isRequired: true,
+  },
+  '2.chapter.earlyCareer': {
+    id: '2.chapter.earlyCareer',
+    nodeId: 'chapterEarlyCareer',
+    name: 'Starting Out',
+    description: 'Share how your career began',
+    pattern: 'IP-02',
+    isRequired: true,
+  },
+  '2.chapter.laterLife': {
+    id: '2.chapter.laterLife',
+    nodeId: 'chapterLaterLife',
+    name: 'Later Chapters',
+    description: 'Reflect on your more recent years',
+    pattern: 'IP-02',
+    isRequired: true,
+  },
+
   // Ongoing
   'ongoing.journal': {
     id: 'ongoing.journal',
@@ -401,3 +511,31 @@ export function getModulesForNode(nodeId: NodeId): Module[] {
   if (!node) return [];
   return node.modules.map((modId) => modules[modId]).filter(Boolean);
 }
+
+// Section definitions for horizontally paginated tap root
+export const sections: Section[] = [
+  {
+    id: 0,
+    title: 'Your Foundation',
+    nodeIds: ['family', 'friends', 'favorites', 'career', 'education', 'values'],
+    lockedMessage: null,
+  },
+  {
+    id: 1,
+    title: 'Your Life Story',
+    nodeIds: ['chapterChildhood', 'chapterSchool', 'chapterCollege', 'chapterEarlyCareer', 'chapterLaterLife'],
+    lockedMessage: 'Complete Your Foundation to unlock your life story. Once I know who matters most to you, we can start capturing the moments that shaped your life.',
+  },
+  {
+    id: 2,
+    title: 'Wisdom & Advice',
+    nodeIds: ['wisdomQuick', 'wisdomLessons', 'wisdomKeys'],
+    lockedMessage: 'Complete Your Foundation to unlock this section. The wisdom you share here will be informed by everything you\'ve told me about your life.',
+  },
+  {
+    id: 3,
+    title: 'Personal to You',
+    nodeIds: ['letters', 'voiceMessages', 'memories', 'memoir'],
+    lockedMessage: 'This section unlocks after your foundation is complete. Here you\'ll write letters, leave voice messages, and reflect on how you want to be remembered.',
+  },
+];

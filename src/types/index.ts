@@ -18,7 +18,25 @@ export type NodeId =
   | 'letters' 
   | 'voiceMessages' 
   | 'memoir'
-  | 'ongoing';
+  | 'ongoing'
+  | 'chapterChildhood'
+  | 'chapterSchool'
+  | 'chapterCollege'
+  | 'chapterEarlyCareer'
+  | 'chapterLaterLife'
+  | 'wisdomQuick'
+  | 'wisdomLessons'
+  | 'wisdomKeys';
+
+// Section identifiers for horizontally paginated tap root
+export type SectionId = 0 | 1 | 2 | 3;
+
+export interface Section {
+  id: SectionId;
+  title: string;
+  nodeIds: NodeId[];
+  lockedMessage: string | null;
+}
 
 // Module ID format: Phase.Node.Module (e.g., "1.family.capture")
 export type ModuleId = string;

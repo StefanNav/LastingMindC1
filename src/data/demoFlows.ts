@@ -99,6 +99,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterSchool', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterCollege', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterEarlyCareer', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterLaterLife', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomQuick', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomLessons', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomKeys', state: 'locked', storyCount: 0, completedModules: [] },
   ],
   
   '01a-phase1-25': [
@@ -114,6 +122,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterSchool', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterCollege', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterEarlyCareer', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterLaterLife', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomQuick', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomLessons', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomKeys', state: 'locked', storyCount: 0, completedModules: [] },
   ],
   
   '01b-phase1-50': [
@@ -129,6 +145,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterSchool', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterCollege', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterEarlyCareer', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterLaterLife', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomQuick', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomLessons', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomKeys', state: 'locked', storyCount: 0, completedModules: [] },
   ],
   
   '01c-phase1-75': [
@@ -144,6 +168,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterSchool', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterCollege', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterEarlyCareer', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterLaterLife', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomQuick', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomLessons', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomKeys', state: 'locked', storyCount: 0, completedModules: [] },
   ],
   
   '02a-phase2-setup': [
@@ -159,6 +191,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterSchool', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterCollege', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterEarlyCareer', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterLaterLife', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomQuick', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomLessons', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomKeys', state: 'locked', storyCount: 0, completedModules: [] },
   ],
   
   '02b-phase2-25': [
@@ -174,6 +214,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'complete', storyCount: 3, completedModules: ['2.chapter.childhood'] },
+    { nodeId: 'chapterSchool', state: 'complete', storyCount: 2, completedModules: ['2.chapter.school'] },
+    { nodeId: 'chapterCollege', state: 'complete', storyCount: 2, completedModules: ['2.chapter.college'] },
+    { nodeId: 'chapterEarlyCareer', state: 'active', storyCount: 1, completedModules: [] },
+    { nodeId: 'chapterLaterLife', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomQuick', state: 'suggested', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomLessons', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'wisdomKeys', state: 'locked', storyCount: 0, completedModules: [] },
   ],
   
   '02c-phase2-75': [
@@ -189,6 +237,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'complete', storyCount: 3, completedModules: ['2.chapter.childhood'] },
+    { nodeId: 'chapterSchool', state: 'complete', storyCount: 2, completedModules: ['2.chapter.school'] },
+    { nodeId: 'chapterCollege', state: 'complete', storyCount: 2, completedModules: ['2.chapter.college'] },
+    { nodeId: 'chapterEarlyCareer', state: 'complete', storyCount: 2, completedModules: ['2.chapter.earlyCareer'] },
+    { nodeId: 'chapterLaterLife', state: 'complete', storyCount: 1, completedModules: ['2.chapter.laterLife'] },
+    { nodeId: 'wisdomQuick', state: 'complete', storyCount: 4, completedModules: ['2.wisdom.quick'] },
+    { nodeId: 'wisdomLessons', state: 'complete', storyCount: 5, completedModules: ['2.wisdom.lessons'] },
+    { nodeId: 'wisdomKeys', state: 'active', storyCount: 3, completedModules: [] },
   ],
   
   '03-phase3-setup': [
@@ -204,6 +260,14 @@ export const demoFlowNodeStates: Record<DemoFlowId, NodeStateData[]> = {
     { nodeId: 'letters', state: 'suggested', storyCount: 0, completedModules: [] },
     { nodeId: 'voiceMessages', state: 'locked', storyCount: 0, completedModules: [] },
     { nodeId: 'memoir', state: 'locked', storyCount: 0, completedModules: [] },
+    { nodeId: 'chapterChildhood', state: 'complete', storyCount: 3, completedModules: ['2.chapter.childhood'] },
+    { nodeId: 'chapterSchool', state: 'complete', storyCount: 2, completedModules: ['2.chapter.school'] },
+    { nodeId: 'chapterCollege', state: 'complete', storyCount: 2, completedModules: ['2.chapter.college'] },
+    { nodeId: 'chapterEarlyCareer', state: 'complete', storyCount: 2, completedModules: ['2.chapter.earlyCareer'] },
+    { nodeId: 'chapterLaterLife', state: 'complete', storyCount: 1, completedModules: ['2.chapter.laterLife'] },
+    { nodeId: 'wisdomQuick', state: 'complete', storyCount: 4, completedModules: ['2.wisdom.quick'] },
+    { nodeId: 'wisdomLessons', state: 'complete', storyCount: 5, completedModules: ['2.wisdom.lessons'] },
+    { nodeId: 'wisdomKeys', state: 'complete', storyCount: 3, completedModules: ['2.wisdom.keys'] },
   ],
 };
 

@@ -370,4 +370,54 @@ export const nodeStates: NodeStateData[] = [
     storyCount: 0,
     completedModules: [],
   },
+  // Demo chapter nodes (locked until Phase 1 complete)
+  {
+    nodeId: 'chapterChildhood',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'chapterSchool',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'chapterCollege',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'chapterEarlyCareer',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'chapterLaterLife',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  // Promoted wisdom nodes (locked until Phase 1 complete)
+  {
+    nodeId: 'wisdomQuick',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'wisdomLessons',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
+  {
+    nodeId: 'wisdomKeys',
+    state: 'locked',
+    storyCount: 0,
+    completedModules: [],
+  },
 ];

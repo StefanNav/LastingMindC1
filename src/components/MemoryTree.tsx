@@ -1,27 +1,43 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, useAnimation } from "framer-motion";
+import { useRef, useEffect } from "react";
 
 interface MemoryTreeProps {
   growthPercentage: number;
   memoriesCount: number;
+  rotation?: number;
 }
 
 export default function MemoryTree({
   growthPercentage,
   memoriesCount,
+  rotation = 0,
 }: MemoryTreeProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const g = growthPercentage / 100;
+  const wobbleControls = useAnimation();
+  const prevRotation = useRef(rotation);
+
+  useEffect(() => {
+    if (rotation !== prevRotation.current) {
+      prevRotation.current = rotation;
+      wobbleControls.start({
+        rotateY: [0, 45, 0],
+        transition: { duration: 0.6, ease: "easeInOut", times: [0, 0.4, 1] },
+      });
+    }
+  }, [rotation, wobbleControls]);
 
   return (
     <div ref={ref} className="relative w-full max-w-md mx-auto">
-      <svg
+      <motion.svg
         viewBox="0 0 400 500"
         className="w-full h-auto"
         xmlns="http://www.w3.org/2000/svg"
+        animate={wobbleControls}
+        style={{ transformStyle: "preserve-3d", perspective: 800 }}
       >
         <defs>
           <radialGradient id="groundGlow" cx="50%" cy="50%" r="50%">
@@ -354,7 +370,7 @@ export default function MemoryTree({
           <circle cx="92" cy="240" r="2.2" fill="#F5E4B8" />
           <circle cx="200" cy="90" r="2.5" fill="#F5E4B8" />
         </motion.g>
-      </svg>
+      </motion.svg>
 
       {/* Progress label beneath the tree */}
       <motion.div

@@ -19,6 +19,12 @@ import {
   Check,
   ChevronDown,
   ChevronUp,
+  Baby,
+  School,
+  Rocket,
+  Sunset,
+  Zap,
+  Key,
 } from "lucide-react";
 import type { NodeId } from "@/types";
 
@@ -51,6 +57,12 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   MessageCircle,
   FileText,
   Sprout,
+  Baby,
+  School,
+  Rocket,
+  Sunset,
+  Zap,
+  Key,
 };
 
 const nodeIconMap: Record<NodeId, string> = {
@@ -67,6 +79,14 @@ const nodeIconMap: Record<NodeId, string> = {
   voiceMessages: 'MessageCircle',
   memoir: 'FileText',
   ongoing: 'Sprout',
+  chapterChildhood: 'Baby',
+  chapterSchool: 'School',
+  chapterCollege: 'GraduationCap',
+  chapterEarlyCareer: 'Rocket',
+  chapterLaterLife: 'Sunset',
+  wisdomQuick: 'Zap',
+  wisdomLessons: 'Lightbulb',
+  wisdomKeys: 'Key',
 };
 
 export default function NodeBubble({
